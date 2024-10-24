@@ -15,22 +15,22 @@ import com.example.demo.models.ClassMedico;
 import com.example.demo.service.IMedicoService;
 
 @Controller
-@RequestMapping("/vistas")
+@RequestMapping("/Vistas")
 public class MedicoController {
 	@Autowired
 	private IMedicoService medicoService;
 	
-	@GetMapping("ListadoMedico")
+	@GetMapping("ListadoMedicos")
 	public String ListadoMedico(Model modelo) {
 		List<ClassMedico> listado=medicoService.ListadoMedico();
 		modelo.addAttribute("listado",listado);
-		return "/Vistas/ListadoProductos";		
+		return "/Vistas/ListadoMedicos";		
 	}   
 	
 	@GetMapping("/RegistrarMedico")
 	public String RegistrarMedico(Model modelo) {
 		ClassMedico clmedico = new ClassMedico();
-		modelo.addAttribute("regproducto",clmedico);
+		modelo.addAttribute("regmedico",clmedico);
 		return "/Vistas/FrmRegMedico";
 	}  
 
@@ -38,7 +38,7 @@ public class MedicoController {
 	public String GuardarMedico(@ModelAttribute ClassMedico clmedico, Model modelo) {	   
 		medicoService.RegistrarMedico(clmedico);
 		System.out.println("datos registrado en bd");
-		return "redirect:/Vistas/ListadoProductos";
+		return "redirect:/Vistas/ListadoMedicos";
 		   
 	}  
 	   
@@ -46,7 +46,7 @@ public class MedicoController {
 	public String Editar(@PathVariable("id") Integer idmedico, Model modelo) {
 		ClassMedico clmedico=medicoService.BuscarporId(idmedico);
 		modelo.addAttribute("regmedico",clmedico);
-		return "/Vistas/FrmRegProducto";
+		return "/Vistas/FrmRegMedico";
 		   
 	} 
 	
@@ -55,7 +55,7 @@ public class MedicoController {
 		medicoService.EliminarMedico(idmedico);
 		List<ClassMedico> listado=medicoService.ListadoMedico();  
 		modelo.addAttribute("listado", listado);
-		return "redirect:/Vistas/ListadoProductos";
+		return "redirect:/Vistas/ListadoMedicos";
 		   
 	   }
 }
